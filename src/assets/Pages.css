@@ -1,0 +1,37 @@
+/* Center card with lovely shadow and padding */
+.card {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.card-title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  color: #333;
+}
+
+.form-label {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
