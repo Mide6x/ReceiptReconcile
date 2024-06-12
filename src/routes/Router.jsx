@@ -10,6 +10,11 @@ import DashboardPagef from "../pages/finance/DashboardPagef";
 import UploadReceiptsPagef from "../pages/finance/UploadReceiptsPagef";
 import HomePagef from "../pages/finance/HomePagef";
 import ProfilePagef from "../pages/finance/ProfilePagef";
+import DashboardPagea from "../pages/admin/DashboardPagea";
+import ProfilePagea from "../pages/admin/ProfilePagea";
+import UploadReceiptsPagea from "../pages/admin/UploadReceiptsPagea";
+import HomePagea from "../pages/admin/HomePagea";
+import Usersa from "../pages/admin/Users";
 
 const AppRouter = () => (
   <Router>
@@ -49,6 +54,27 @@ const AppRouter = () => (
       <Route
         path="/finance/home"
         element={<PrivateRoute element={HomePagef} role="finance" />}
+      />
+      {/* Admin Routes */}
+      <Route
+        path="/admin/dashboard"
+        element={<PrivateRoute element={DashboardPagea} role="admin" />}
+      />
+      <Route
+        path="/admin/profile"
+        element={<PrivateRoute element={ProfilePagea} role="admin" />}
+      />
+      <Route
+        path="/admin/upload-receipts"
+        element={<PrivateRoute element={UploadReceiptsPagea} role="admin" />}
+      />
+      <Route
+        path="/admin/home"
+        element={<PrivateRoute element={HomePagea} role="admin" />}
+      />
+      <Route
+        path="/admin/usersa"
+        element={<PrivateRoute element={Usersa} role="admin" />}
       />
     </Routes>
   </Router>

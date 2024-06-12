@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
-const UploadReceiptsPage = () => {
+const UploadReceiptsPagea = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,38 +15,10 @@ const UploadReceiptsPage = () => {
     setSelectedFile(e.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!selectedFile) {
-      setError("Please select a file to upload");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("receipt", selectedFile);
-
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        "http://localhost:3001/upload-receipt",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      console.log("File submitted:", response.data);
-      setSuccess("Receipt uploaded successfully!");
-      setError("");
-    } catch (err) {
-      console.error("Error during file upload:", err.response || err);
-      setError("An error occurred while uploading the receipt.");
-      setSuccess("");
-    }
+    // Handle file upload logic here
+    console.log("File submitted:", selectedFile);
   };
 
   return (
@@ -61,18 +30,23 @@ const UploadReceiptsPage = () => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/home">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
+              <Link className="nav-link" to="/admin/dashboard">
                 Dashboard
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/profile">
+              <Link className="nav-link" to="/admin/home">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/admin/profile">
                 Profile
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/admin/usersa">
+                Admin
               </Link>
             </li>
           </ul>
@@ -88,7 +62,7 @@ const UploadReceiptsPage = () => {
         <h2>Upload Receipts</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="receiptUpload">Upload Receipt, delivery</label>
+            <label htmlFor="receiptUpload">Upload Receipt, finance </label>
             <input
               type="file"
               className="form-control-file"
@@ -96,8 +70,6 @@ const UploadReceiptsPage = () => {
               onChange={handleFileChange}
             />
           </div>
-          {error && <div className="alert alert-danger">{error}</div>}
-          {success && <div className="alert alert-success">{success}</div>}
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
@@ -107,4 +79,4 @@ const UploadReceiptsPage = () => {
   );
 };
 
-export default UploadReceiptsPage;
+export default UploadReceiptsPagea;

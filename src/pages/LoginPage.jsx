@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -35,10 +36,13 @@ const LoginPage = () => {
               break;
           }
         } else {
-          console.log("Login failed");
+          setError(result.data);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setError("An error occurred. Please try again or Contact Admin");
+      });
   };
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
@@ -72,6 +76,8 @@ const LoginPage = () => {
               required
             />
           </div>
+          {error && <div className="alert alert-danger">{error}</div>}{" "}
+          {/* Display error */}
           <button type="submit" className="btn btn-primary w-100">
             Login
           </button>
