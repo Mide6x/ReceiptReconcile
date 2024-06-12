@@ -9,12 +9,13 @@ const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("delivery"); // Default role is 'delivery'
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/register", { name, email, password })
+      .post("http://localhost:3001/register", { name, email, password, role })
       .then((result) => {
         console.log(result);
         navigate("/login");
@@ -67,6 +68,22 @@ const RegisterPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="role" className="form-label">
+              Role
+            </label>
+            <select
+              id="role"
+              className="form-select"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              required
+            >
+              <option value="delivery">Delivery</option>
+              <option value="finance">Finance</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           <button type="submit" className="btn btn-primary w-100">
             Register
