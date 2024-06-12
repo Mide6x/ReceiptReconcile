@@ -1,0 +1,35 @@
+/* Additional spacing and form layout */
+.content-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-control-file {
+  display: block;
+  width: 100%;
+}
+
+.img-thumbnail {
+  display: block;
+  margin-top: 1rem;
+}
+
+.alert {
+  margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
