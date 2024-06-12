@@ -3,15 +3,24 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/Pages.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("", {});
-    // Handle login logic here
+    axios
+      .post("http://localhost:3001/login", { email, password })
+      .then((result) => {
+        console.log(result);
+        if (result.data === "Success") {
+          navigate("/home");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
