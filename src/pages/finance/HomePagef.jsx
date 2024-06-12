@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 
-const HomePage = () => {
+const HomePagef = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -17,17 +17,17 @@ const HomePage = () => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
+              <Link className="nav-link" to="/finance/dashboard">
                 Dashboard
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/profile">
+              <Link className="nav-link" to="/finance/profile">
                 Profile
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/upload-receipts">
+              <Link className="nav-link" to="/finance/upload-receipts">
                 Upload Receipts
               </Link>
             </li>
@@ -46,7 +46,7 @@ const HomePage = () => {
         <p className="lead">Manage and upload your receipts effortlessly.</p>
         <hr className="my-4" />
         <p>
-          Navigate through your delivery profile, dashboard, and receipt uploads
+          Navigate through your finance profile, dashboard, and receipt uploads
           using the navigation bar above.
         </p>
       </div>
@@ -54,4 +54,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePagef;

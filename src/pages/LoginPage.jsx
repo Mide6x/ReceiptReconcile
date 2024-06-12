@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/Pages.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -17,14 +18,28 @@ const LoginPage = () => {
       .then((result) => {
         if (result.data.token) {
           localStorage.setItem("token", result.data.token);
-          navigate("/home");
+          const decodedToken = jwtDecode(result.data.token);
+          const role = decodedToken.role;
+          switch (role) {
+            case "delivery":
+              navigate("/dashboard");
+              break;
+            case "finance":
+              navigate("/finance/home");
+              break;
+            case "admin":
+              navigate("/admin/home");
+              break;
+            default:
+              console.log("Unknown role");
+              break;
+          }
         } else {
           console.log("Login failed");
         }
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <div className="card shadow-lg p-4">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const UploadReceiptsPage = () => {
+const UploadReceiptsPagef = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const navigate = useNavigate();
@@ -30,17 +30,17 @@ const UploadReceiptsPage = () => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/home">
+              <Link className="nav-link" to="/finance/home">
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
+              <Link className="nav-link" to="/finance/dashboard">
                 Dashboard
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/profile">
+              <Link className="nav-link" to="/finance/profile">
                 Profile
               </Link>
             </li>
@@ -57,7 +57,7 @@ const UploadReceiptsPage = () => {
         <h2>Upload Receipts</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="receiptUpload">Upload Receipt, delivery </label>
+            <label htmlFor="receiptUpload">Upload Receipt, finance </label>
             <input
               type="file"
               className="form-control-file"
@@ -74,4 +74,4 @@ const UploadReceiptsPage = () => {
   );
 };
 
-export default UploadReceiptsPage;
+export default UploadReceiptsPagef;

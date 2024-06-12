@@ -1,13 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 
-const HomePage = () => {
+const ProfilePagef = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
-
   return (
     <div className="container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,17 +16,18 @@ const HomePage = () => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
+              <Link className="nav-link" to="/finance/home">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/finance/dashboard">
                 Dashboard
               </Link>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/profile">
-                Profile
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/upload-receipts">
+              <Link className="nav-link" to="/finance/upload-receipts">
                 Upload Receipts
               </Link>
             </li>
@@ -40,18 +40,15 @@ const HomePage = () => {
           </button>
         </div>
       </nav>
-
-      <div className="jumbotron mt-4">
-        <h1 className="display-4">Welcome to ReceiptReconcile!</h1>
-        <p className="lead">Manage and upload your receipts effortlessly.</p>
-        <hr className="my-4" />
+      <div>
+        <h2>Profile</h2>
         <p>
-          Navigate through your delivery profile, dashboard, and receipt uploads
-          using the navigation bar above.
+          This is your profile page where you can manage your personal
+          information finance.
         </p>
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default ProfilePagef;
