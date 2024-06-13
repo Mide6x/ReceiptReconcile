@@ -167,7 +167,7 @@ const UploadReceiptsPage = () => {
           {receipts.map((receipt) => (
             <div key={receipt._id} className="mb-2">
               <a
-                href={`/${receipt.fileUrl}`}
+                href={`http://localhost:3001/${receipt.fileUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -175,7 +175,7 @@ const UploadReceiptsPage = () => {
               </a>{" "}
               <span className="ml-2">
                 Uploaded on: {new Date(receipt.uploadDate).toLocaleString()} by{" "}
-                {receipt.uploader.email}
+                {receipt.uploader?.email || "Unknown"}
               </span>
             </div>
           ))}
