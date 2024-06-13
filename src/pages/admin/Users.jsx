@@ -4,6 +4,9 @@ import axios from "axios";
 
 const Usersa = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [receipts, setReceipts] = useState([]);
+  const [deliveryRegion, setDeliveryRegion] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,6 +46,20 @@ const Usersa = () => {
         setUsers(users.map((user) => (user._id === id ? response.data : user)));
       })
       .catch((error) => console.error("Error blocking user:", error));
+  };
+
+  const handleUserSelect = (id, deliveryArea) => {
+    setSelectedUserId(id);
+    setReceipts([]);
+    setDeliveryRegion(deliveryArea);
+
+    const token = localStorage.getItem("token");
+    axios
+      .get(`http://localhost:3001/receipts/user/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => setReceipts(response.data))
+      .catch((error) => console.error("Error fetching receipts:", error));
   };
 
   return (
@@ -114,12 +131,45 @@ const Usersa = () => {
                   >
                     Block
                   </button>
+                  {"  "}
+                  <button
+                    className="btn btn-primary btn-sm ml-2"
+                    onClick={() =>
+                      handleUserSelect(user._id, user.deliveryArea)
+                    }
+                  >
+                    View Receipts
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {selectedUserId && (
+        <div>
+          <h3>Uploaded Receipts</h3>
+          <p>
+            <strong>Delivery Region:</strong> {deliveryRegion}
+          </p>
+          {receipts.map((receipt) => (
+            <div key={receipt._id} className="mb-2">
+              <a
+                href={`http://localhost:3001/${receipt.fileUrl}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Receipt
+              </a>{" "}
+              <span className="ml-2">
+                Order From: {receipt.storeName}. Uploaded on:{" "}
+                {new Date(receipt.uploadDate).toLocaleString()} by{" "}
+                {receipt.uploader?.email || "Unknown"}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,11 +1,48 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const HomePagea = () => {
+  const [deliveryArea, setDeliveryArea] = useState("");
+  const [storeName, setStoreName] = useState("");
+  const [sellerContact, setSellerContact] = useState("");
+  const [item, setItem] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        "http://localhost:3001/notifications",
+        { deliveryArea, storeName, sellerContact, item, quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSuccess("Notification created successfully!");
+      setError("");
+      // Clear the form
+      setDeliveryArea("");
+      setStoreName("");
+      setSellerContact("");
+      setItem("");
+      setQuantity("");
+    } catch (err) {
+      console.error("Error creating notification:", err.response || err);
+      setError("An error occurred while creating the notification.");
+      setSuccess("");
+    }
   };
 
   return (
@@ -54,6 +91,81 @@ const HomePagea = () => {
           Navigate through your Admin profile, dashboard, and receipt uploads
           using the navigation bar above.
         </p>
+      </div>
+
+      <div className="mt-4">
+        <h2>Create a Notification</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group mt-3">
+            <label htmlFor="deliveryArea">Delivery Area</label>
+            <select
+              className="form-control mt-2"
+              id="deliveryArea"
+              value={deliveryArea}
+              onChange={(e) => setDeliveryArea(e.target.value)}
+              required
+            >
+              <option value="">Select Delivery Area</option>
+              <option value="Oshodi">Oshodi</option>
+              <option value="Ifako-Ijaye">Ifako-Ijaye</option>
+              <option value="Mushin">Mushin</option>
+              <option value="Lekki">Lekki</option>
+              <option value="Ikeja">Ikeja</option>
+              <option value="Alimosho">Alimosho</option>
+              <option value="Kosofe">Kosofe</option>
+              <option value="Ajah">Ajah</option>
+            </select>
+          </div>
+          <div className="form-group mt-3">
+            <label htmlFor="storeName">Store Name</label>
+            <input
+              type="text"
+              className="form-control mt-2"
+              id="storeName"
+              value={storeName}
+              onChange={(e) => setStoreName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label htmlFor="sellerContact">Seller Contact</label>
+            <input
+              type="text"
+              className="form-control mt-2"
+              id="sellerContact"
+              value={sellerContact}
+              onChange={(e) => setSellerContact(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label htmlFor="item">Item to be Picked Up</label>
+            <input
+              type="text"
+              className="form-control mt-2"
+              id="item"
+              value={item}
+              onChange={(e) => setItem(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label htmlFor="quantity">Quantity</label>
+            <input
+              type="number"
+              className="form-control mt-2"
+              id="quantity"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              required
+            />
+          </div>
+          {error && <div className="alert alert-danger">{error}</div>}
+          {success && <div className="alert alert-success">{success}</div>}
+          <button type="submit" className="btn btn-primary mt-4">
+            Create Notification
+          </button>
+        </form>
       </div>
     </div>
   );

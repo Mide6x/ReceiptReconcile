@@ -7,12 +7,12 @@ const UploadReceiptsPage = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [receipts, setReceipts] = useState([]); // Add state to store receipts
+  const [storeName, setStoreName] = useState(""); // New state for store name
+  const [receipts, setReceipts] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch receipts on component mount
     const fetchReceipts = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -58,8 +58,14 @@ const UploadReceiptsPage = () => {
       return;
     }
 
+    if (!storeName) {
+      setError("Please enter the store name");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("receipt", selectedFile);
+    formData.append("storeName", storeName);
 
     try {
       const token = localStorage.getItem("token");
@@ -79,8 +85,8 @@ const UploadReceiptsPage = () => {
       setError("");
       setSelectedFile(null);
       setPreviewUrl(null);
+      setStoreName("");
 
-      // Fetch updated receipts list
       const updatedReceipts = await axios.get(
         "http://localhost:3001/receipts",
         {
@@ -133,6 +139,18 @@ const UploadReceiptsPage = () => {
         <h2 className="mb-3">Upload Receipts</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-4">
+            <label htmlFor="storeName" className="mb-2">
+              Store Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="storeName"
+              value={storeName}
+              onChange={(e) => setStoreName(e.target.value)}
+            />
+          </div>
+          <div className="form-group mb-4">
             <label htmlFor="receiptUpload" className="mb-2">
               Upload Receipt
             </label>
@@ -174,7 +192,8 @@ const UploadReceiptsPage = () => {
                 View Receipt
               </a>{" "}
               <span className="ml-2">
-                Uploaded on: {new Date(receipt.uploadDate).toLocaleString()} by{" "}
+                Order From: {receipt.storeName}. Uploaded on:{" "}
+                {new Date(receipt.uploadDate).toLocaleString()} by{" "}
                 {receipt.uploader?.email || "Unknown"}
               </span>
             </div>
