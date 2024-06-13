@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -10,7 +10,45 @@ const HomePagea = () => {
   const [quantity, setQuantity] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [acceptedNotifications, setAcceptedNotifications] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAcceptedNotifications = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          console.error("No token found. Redirecting to login.");
+          navigate("/login");
+          return;
+        }
+
+        const response = await axios.get(
+          "http://localhost:3001/notifications/accepted",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("Accepted notifications:", response.data); // Log the response data
+
+        setAcceptedNotifications(response.data);
+      } catch (err) {
+        console.error(
+          "Error fetching accepted notifications:",
+          err.response || err
+        );
+        setError(
+          "Error fetching accepted notifications. Please try again later."
+        );
+      }
+    };
+
+    fetchAcceptedNotifications();
+  }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -160,12 +198,33 @@ const HomePagea = () => {
               required
             />
           </div>
-          {error && <div className="alert alert-danger">{error}</div>}
-          {success && <div className="alert alert-success">{success}</div>}
+          {error && <div className="alert alert-danger mt-3">{error}</div>}
+          {success && <div className="alert alert-success mt-3">{success}</div>}
           <button type="submit" className="btn btn-primary mt-4">
             Create Notification
           </button>
         </form>
+      </div>
+
+      <div className="mt-4">
+        <h2>Notification Details</h2>
+        <div className="card mt-3">
+          <div className="card-header">Accepted Notifications</div>
+          <ul className="list-group list-group-flush">
+            {acceptedNotifications.length === 0 ? (
+              <li className="list-group-item">No accepted notifications.</li>
+            ) : (
+              acceptedNotifications.map((notification) => (
+                <li className="list-group-item" key={notification._id}>
+                  <strong>User:</strong> {notification.acceptedBy.email}
+                  <br />
+                  <strong>Delivery Status:</strong>{" "}
+                  {notification.deliveredAt ? "Delivered" : "Pending"}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );
