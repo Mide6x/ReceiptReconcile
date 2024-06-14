@@ -7,7 +7,7 @@ const UploadReceiptsPage = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [storeName, setStoreName] = useState(""); // New state for store name
+  const [storeName, setStoreName] = useState("");
   const [receipts, setReceipts] = useState([]);
 
   const navigate = useNavigate();
@@ -184,18 +184,15 @@ const UploadReceiptsPage = () => {
           <h3>Uploaded Receipts</h3>
           {receipts.map((receipt) => (
             <div key={receipt._id} className="mb-2">
+              View Receipt:{" "}
               <a
-                href={`http://localhost:3001/${receipt.fileUrl}`}
+                href={`http://localhost:5173/${receipt.fileUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                View Receipt
+                {receipt.fileUrl}
               </a>{" "}
-              <span className="ml-2">
-                Order From: {receipt.storeName}. Uploaded on:{" "}
-                {new Date(receipt.uploadDate).toLocaleString()} by{" "}
-                {receipt.uploader?.email || "Unknown"}
-              </span>
+              <span className="ml-2">Order From: {receipt.storeName}.</span>
             </div>
           ))}
         </div>

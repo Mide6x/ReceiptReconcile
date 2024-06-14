@@ -61,16 +61,18 @@ const UploadReceiptsPagea = () => {
       <div>
         <h2>Upload Receipts</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="receiptUpload">Upload Receipt, finance </label>
+          <div></div>
+          <div className="form-group mt-3">
+            <label htmlFor="receiptUpload">Upload Receipt, Admin </label>
+            <div></div>
             <input
               type="file"
-              className="form-control-file"
+              className="form-control-file mt-3"
               id="receiptUpload"
               onChange={handleFileChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary mt-3">
             Submit
           </button>
         </form>

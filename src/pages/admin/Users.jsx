@@ -155,7 +155,7 @@ const Usersa = () => {
           {receipts.map((receipt) => (
             <div key={receipt._id} className="mb-2">
               <a
-                href={`http://localhost:3001/${receipt.fileUrl}`}
+                href={`http://localhost:5173/${receipt.fileUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
