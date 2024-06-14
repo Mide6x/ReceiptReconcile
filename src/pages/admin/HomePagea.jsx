@@ -33,16 +33,11 @@ const HomePagea = () => {
           }
         );
 
-        console.log("Accepted notifications:", response.data); // Log the response data
-
         setAcceptedNotifications(response.data);
       } catch (err) {
         console.error(
           "Error fetching accepted notifications:",
           err.response || err
-        );
-        setError(
-          "Error fetching accepted notifications. Please try again later."
         );
       }
     };
@@ -216,7 +211,14 @@ const HomePagea = () => {
             ) : (
               acceptedNotifications.map((notification) => (
                 <li className="list-group-item" key={notification._id}>
-                  <strong>User:</strong> {notification.acceptedBy.email}
+                  <strong>Delivery Person:</strong>{" "}
+                  {notification.acceptedBy
+                    ? notification.acceptedBy.email
+                    : "N/A"}
+                  ,{" "}
+                  {notification.acceptedBy
+                    ? notification.acceptedBy.phoneNumber
+                    : "N/A"}
                   <br />
                   <strong>Delivery Status:</strong>{" "}
                   {notification.deliveredAt ? "Delivered" : "Pending"}
