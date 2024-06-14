@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const UploadReceiptsPagef = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [storeName, setStoreName] = useState("");
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -12,13 +16,38 @@ const UploadReceiptsPagef = () => {
   };
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    setSelectedFiles(e.target.files);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle file upload logic here
-    console.log("File submitted:", selectedFile);
+    if (selectedFiles.length < 1 || selectedFiles.length > 30) {
+      alert("Please select between 1 and 30 files.");
+      return;
+    }
+
+    const formData = new FormData();
+    Array.from(selectedFiles).forEach((file) => {
+      formData.append("receipts", file);
+    });
+
+    formData.append("storeName", storeName);
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:3001/receipts/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setSuccess("Receipts uploaded successfully!");
+      setSelectedFiles([]);
+      setStoreName("");
+    } catch (error) {
+      console.error("Error uploading receipts:", error);
+      setError("Error uploading receipts.");
+    }
   };
 
   return (
@@ -57,15 +86,29 @@ const UploadReceiptsPagef = () => {
         <h2>Upload Receipts</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="receiptUpload">Upload Receipt, finance </label>
+            <label htmlFor="receiptUpload">Upload Receipts (1-30 files)</label>
+            <div></div>
             <input
               type="file"
-              className="form-control-file"
+              className="form-control-file mt-3"
               id="receiptUpload"
               onChange={handleFileChange}
+              multiple
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <div className="form-group mt-3">
+            <label htmlFor="storeName">Store Name (Optional)</label>
+            <input
+              type="text"
+              className="form-control mt-2"
+              id="storeName"
+              value={storeName}
+              onChange={(e) => setStoreName(e.target.value)}
+            />
+          </div>
+          {error && <div className="alert alert-success mt-3">{error}</div>}
+          {success && <div className="alert alert-success mt-3">{success}</div>}
+          <button type="submit" className="btn btn-primary mt-3">
             Submit
           </button>
         </form>
