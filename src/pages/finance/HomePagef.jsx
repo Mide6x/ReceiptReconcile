@@ -22,10 +22,14 @@ const HomePagef = () => {
         handleLogout={handleLogout}
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
-        <h1 className="display-4">Welcome to ReceiptReconcile!</h1>
-        <p className="lead">Manage and upload your receipts effortlessly.</p>
+        <h1 className="display-4 cormorant-garamond-semibold">
+          Welcome to ReceiptReconcile!
+        </h1>
+        <p className="lead cormorant-garamond-regular">
+          Manage and upload your receipts effortlessly.
+        </p>
         <hr className="my-4" />
-        <p>
+        <p className="lead cormorant-garamond-regular">
           Navigate through your finance profile, dashboard, and receipt uploads
           using the navigation bar above.
         </p>

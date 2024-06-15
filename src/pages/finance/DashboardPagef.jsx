@@ -24,8 +24,8 @@ const DashboardPagef = () => {
         handleLogout={handleLogout}
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
-        <h2>Dashboard</h2>
-        <p>
+        <h2 className="display-4  cormorant-garamond-bold">Dashboard</h2>
+        <p className="lead cormorant-garamond-regular">
           This is your finance dashboard where you can see an overview of your
           activities.
         </p>

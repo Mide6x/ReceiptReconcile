@@ -36,10 +36,12 @@ const UploadReceiptsPagea = () => {
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
         <div>
-          <h2>Upload Receipts</h2>
+          <h2 className=" display-4 cormorant-garamond-bold">
+            Upload Receipts
+          </h2>
           <form onSubmit={handleSubmit}>
             <div></div>
-            <div className="form-group mt-3">
+            <div className="form-group mt-3 lead cormorant-garamond-regular">
               <label htmlFor="receiptUpload">Upload Receipt, Admin </label>
               <div></div>
               <input
@@ -49,7 +51,10 @@ const UploadReceiptsPagea = () => {
                 onChange={handleFileChange}
               />
             </div>
-            <button type="submit" className="btn btn-primary mt-3">
+            <button
+              type="submit"
+              className="btn btn-primary mt-3 lead cormorant-garamond-regular"
+            >
               Submit
             </button>
           </form>

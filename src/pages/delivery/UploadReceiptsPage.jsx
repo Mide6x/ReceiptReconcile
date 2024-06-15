@@ -117,35 +117,45 @@ const UploadReceiptsPage = () => {
         handleLogout={handleLogout}
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
-        <h2 className="mb-3">Upload Receipts</h2>
+        <h2 className="display-4 cormorant-garamond-semibold mb-3">
+          Upload Receipts
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-4">
-            <label htmlFor="storeName" className="mb-2">
+            <label
+              htmlFor="storeName"
+              className=" lead mb-2 cormorant-garamond-regular"
+            >
               Store Name
             </label>
             <input
               type="text"
-              className="form-control"
+              className="form-control "
               id="storeName"
               value={storeName}
               onChange={(e) => setStoreName(e.target.value)}
             />
           </div>
           <div className="form-group mb-4">
-            <label htmlFor="receiptUpload" className="mb-2">
+            <label
+              htmlFor="receiptUpload"
+              className="mb-2 lead cormorant-garamond-regular"
+            >
               Upload Receipt
             </label>
             <div></div>
             <input
               type="file"
-              className="form-control-file"
+              className="form-control-file cormorant-garamond-regular"
               id="receiptUpload"
               onChange={handleFileChange}
             />
           </div>
           {previewUrl && (
             <div className="mb-3">
-              <h5>Preview:</h5>
+              <h5 className="display-6 lead cormorant-garamond-medium">
+                Preview:
+              </h5>
               <div className="mb-2"></div>
               <img
                 src={previewUrl}
@@ -157,14 +167,22 @@ const UploadReceiptsPage = () => {
           )}
           {error && <div className="alert alert-danger">{error}</div>}
           {success && <div className="alert alert-success">{success}</div>}
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary lead cormorant-garamond-regular"
+          >
             Submit
           </button>
         </form>
         <div className="mt-4">
-          <h3>Uploaded Receipts</h3>
+          <h3 className="display-6 cormorant-garamond-medium">
+            Uploaded Receipts
+          </h3>
           {receipts.map((receipt) => (
-            <div key={receipt._id} className="mb-2">
+            <div
+              key={receipt._id}
+              className="mb-2 lead cormorant-garamond-regular"
+            >
               View Receipt:{" "}
               <a
                 href={`http://localhost:5173/${receipt.fileUrl}`}

@@ -93,19 +93,25 @@ const HomePagea = () => {
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
         <div className="jumbotron">
-          <h1 className="display-4">Welcome to ReceiptReconcile!</h1>
-          <p className="lead">Manage and upload your receipts effortlessly.</p>
+          <h1 className="display-4 cormorant-garamond-semibold">
+            Welcome to ReceiptReconcile!
+          </h1>
+          <p className="lead cormorant-garamond-regular">
+            Manage and upload your receipts effortlessly.
+          </p>
           <hr className="my-4" />
-          <p>
+          <p className="lead cormorant-garamond-regular">
             Navigate through your Admin profile, dashboard, and receipt uploads
-            using the navigation bar above.
+            using the sidebar.
           </p>
         </div>
 
         <div className="mt-4">
-          <h2>Create a Notification</h2>
+          <h2 className="display-6 cormorant-garamond-medium">
+            Create a Notification
+          </h2>
           <form onSubmit={handleSubmit}>
-            <div className="form-group mt-3">
+            <div className="form-group mt-3 lead cormorant-garamond-regular">
               <label htmlFor="deliveryArea">Delivery Area</label>
               <select
                 className="form-control mt-2"
@@ -125,7 +131,7 @@ const HomePagea = () => {
                 <option value="Ajah">Ajah</option>
               </select>
             </div>
-            <div className="form-group mt-3">
+            <div className="form-group mt-3 lead cormorant-garamond-regular">
               <label htmlFor="storeName">Store Name</label>
               <input
                 type="text"
@@ -136,7 +142,7 @@ const HomePagea = () => {
                 required
               />
             </div>
-            <div className="form-group mt-3">
+            <div className="form-group mt-3 lead cormorant-garamond-regular">
               <label htmlFor="sellerContact">Seller Contact</label>
               <input
                 type="text"
@@ -147,7 +153,7 @@ const HomePagea = () => {
                 required
               />
             </div>
-            <div className="form-group mt-3">
+            <div className="form-group mt-3 lead cormorant-garamond-regular">
               <label htmlFor="item">Item to be Picked Up</label>
               <input
                 type="text"
@@ -158,7 +164,7 @@ const HomePagea = () => {
                 required
               />
             </div>
-            <div className="form-group mt-3">
+            <div className="form-group mt-3 lead cormorant-garamond-regular">
               <label htmlFor="quantity">Quantity</label>
               <input
                 type="number"
@@ -169,20 +175,31 @@ const HomePagea = () => {
                 required
               />
             </div>
-            {error && <div className="alert alert-danger mt-3">{error}</div>}
-            {success && (
-              <div className="alert alert-success mt-3">{success}</div>
+            {error && (
+              <div className="alert alert-danger mt-3 lead cormorant-garamond-regular">
+                {error}
+              </div>
             )}
-            <button type="submit" className="btn btn-primary mt-4">
+            {success && (
+              <div className="alert alert-success mt-3 lead cormorant-garamond-regular">
+                {success}
+              </div>
+            )}
+            <button
+              type="submit"
+              className="btn btn-primary mt-4 lead cormorant-garamond-regular"
+            >
               Create Notification
             </button>
           </form>
         </div>
-
+        <hr className="my-4" />
         <div className="mt-4">
-          <h2>Notification Details</h2>
-          <div className="card mt-3">
-            <div className="card-header">Accepted Notifications</div>
+          <h2 className="display-6 cormorant-garamond-medium">
+            Notification Details
+          </h2>
+          <div className="card mt-3 lead cormorant-garamond-regular">
+            <div className="card-header ">Accepted Notifications</div>
             <ul className="list-group list-group-flush">
               {acceptedNotifications.length === 0 ? (
                 <li className="list-group-item">No accepted notifications.</li>

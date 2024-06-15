@@ -77,9 +77,11 @@ const Usersa = () => {
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
         <div>
-          <h2>Users</h2>
-          <p>This is a list of all Users</p>
-          <table className="table">
+          <h2 className="display-4 cormorant-garamond-bold">Users</h2>
+          <p className="lead cormorant-garamond-regular">
+            This is a list of all Users and their Roles
+          </p>
+          <table className="table lead cormorant-garamond-regular">
             <thead>
               <tr>
                 <th>Name</th>
@@ -111,7 +113,7 @@ const Usersa = () => {
                     </button>
                     {"  "}
                     <button
-                      className="btn btn-primary btn-sm ml-2 mt-1"
+                      className="btn btn-primary btn-sm ml-2 mt-1 lead cormorant-garamond-medium"
                       onClick={() =>
                         handleUserSelect(user._id, user.deliveryArea)
                       }
@@ -125,8 +127,10 @@ const Usersa = () => {
           </table>
         </div>
         {selectedUserId && (
-          <div>
-            <h3>Uploaded Receipts</h3>
+          <div className="lead cormorant-garamond-regular">
+            <h3 className="display-6  cormorant-garamond-semibold">
+              Uploaded Receipts
+            </h3>
             <p>
               <strong>Delivery Region:</strong> {deliveryRegion}
             </p>

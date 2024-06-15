@@ -29,14 +29,17 @@ const Sidebar = ({ isOpen, toggleSidebar, handleLogout }) => {
         <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
       </button>
       <div className="sidebar-content mt-3">
-        <Link to="/home" className="sidebar-brand">
+        <Link
+          to="/home"
+          className="sidebar-brand lead cormorant-garamond-medium"
+        >
           {isOpen && "ReceiptReconcile"}
         </Link>
         <ul className="sidebar-nav">
           {sidebarLinks.map((link) => (
             <li key={link.to} className="sidebar-item mt-4">
               <Link
-                className="sidebar-link"
+                className="sidebar-link lead cormorant-garamond-regular"
                 to={link.to}
                 onClick={toggleSidebar}
               >
@@ -48,7 +51,7 @@ const Sidebar = ({ isOpen, toggleSidebar, handleLogout }) => {
         </ul>
         {isOpen && (
           <button
-            className="btn btn-outline-danger my-2 my-sm-0"
+            className="btn btn-outline-danger my-2 my-sm-0 lead cormorant-garamond-semibold"
             onClick={handleLogout}
           >
             Logout

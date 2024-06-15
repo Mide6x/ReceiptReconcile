@@ -26,24 +26,32 @@ const RegisterPage = () => {
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <div className="card shadow-lg p-4">
-        <h2 className="card-title text-center mb-4">Register</h2>
+        <h2 className="card-title text-center mb-4 display-4 cormorant-garamond-semibold">
+          Register
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">
+            <label
+              htmlFor="name"
+              className="form-label cormorant-garamond-regular"
+            >
               Name
             </label>
             <input
               type="text"
               id="name"
               placeholder="Type in your firstname, and lastname"
-              className="form-control"
+              className="form-control cormorant-garamond-regular"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">
+            <label
+              htmlFor="email"
+              className="form-label cormorant-garamond-regular"
+            >
               Email
             </label>
             <input
@@ -57,7 +65,10 @@ const RegisterPage = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">
+            <label
+              htmlFor="password"
+              className="form-label cormorant-garamond-regular"
+            >
               Password
             </label>
             <input
@@ -70,12 +81,15 @@ const RegisterPage = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="role" className="form-label">
+            <label
+              htmlFor="role"
+              className="form-label cormorant-garamond-regular"
+            >
               Role
             </label>
             <select
               id="role"
-              className="form-select"
+              className="form-select cormorant-garamond-regular"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               required
@@ -85,12 +99,20 @@ const RegisterPage = () => {
               <option value="admin">Admin</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary w-100">
+          <button
+            type="submit"
+            className="btn btn-primary w-100 cormorant-garamond-regular"
+          >
             Register
           </button>
         </form>
-        <p className="text-center mt-3">Already have an account?</p>
-        <Link to="/login" className="btn btn-outline-primary w-100">
+        <p className="text-center mt-3 cormorant-garamond-regular">
+          Already have an account?
+        </p>
+        <Link
+          to="/login"
+          className="btn btn-outline-primary w-100 cormorant-garamond-regular"
+        >
           Login
         </Link>
       </div>

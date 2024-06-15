@@ -64,9 +64,9 @@ const UploadReceiptsPagef = () => {
         handleLogout={handleLogout}
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
-        <h2>Upload Receipts</h2>
+        <h2 className="display-4 cormorant-garamond-bold"> Upload Receipts</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="form-group lead cormorant-garamond-regular">
             <label htmlFor="receiptUpload">Upload Receipts (1-30 files)</label>
             <div></div>
             <input
@@ -77,7 +77,7 @@ const UploadReceiptsPagef = () => {
               multiple
             />
           </div>
-          <div className="form-group mt-3">
+          <div className="form-group mt-3 lead cormorant-garamond-regular">
             <label htmlFor="storeName">Store Name (Optional)</label>
             <input
               type="text"
@@ -89,7 +89,10 @@ const UploadReceiptsPagef = () => {
           </div>
           {error && <div className="alert alert-success mt-3">{error}</div>}
           {success && <div className="alert alert-success mt-3">{success}</div>}
-          <button type="submit" className="btn btn-primary mt-3">
+          <button
+            type="submit"
+            className="btn btn-primary mt-3 lead cormorant-garamond-regular"
+          >
             Submit
           </button>
         </form>

@@ -22,8 +22,8 @@ const ProfilePagea = () => {
         handleLogout={handleLogout}
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
-        <h2>Profile</h2>
-        <p>
+        <h2 className="display-4 cormorant-garamond-bold">Profile</h2>
+        <p className="lead cormorant-garamond-regular">
           This is your profile page where you can manage your personal
           information finance.
         </p>

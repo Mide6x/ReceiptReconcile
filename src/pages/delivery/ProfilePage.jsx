@@ -117,16 +117,29 @@ const ProfilePage = () => {
         handleLogout={handleLogout}
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
-        <h2>Profile</h2>
-        <p>
+        <h2 className="display-4 cormorant-garamond-semibold mb-3">Profile</h2>
+        <p className="lead cormorant-garamond-regular">
           This is your profile page where you can manage your personal
           information and delivery details.
         </p>
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
+        {error && (
+          <div className="alert alert-danger lead cormorant-garamond-regular">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="alert alert-success lead cormorant-garamond-regular">
+            {success}
+          </div>
+        )}
         <form onSubmit={handleProfileUpdate}>
           <div className="form-group">
-            <label htmlFor="profilePicture">Profile Picture</label>
+            <label
+              htmlFor="profilePicture"
+              className="lead cormorant-garamond-semibold"
+            >
+              Profile Picture
+            </label>
             <div className="mt-3"></div>
             {profile.profilePicture && (
               <div>
@@ -140,21 +153,21 @@ const ProfilePage = () => {
             )}
             <input
               type="file"
-              className="form-control-file mt-3"
+              className="form-control-file mt-3 lead cormorant-garamond-regular"
               id="profilePicture"
               onChange={handleFileChange}
             />
             <div className="mt-4"></div>
             <button
               type="button"
-              className="btn btn-primary mt-1"
+              className="btn btn-primary mt-1 lead cormorant-garamond-regular"
               onClick={handlePictureUpdate}
             >
               Update Profile Picture
             </button>
           </div>
 
-          <div className="form-group mt-4">
+          <div className="form-group mt-4 lead cormorant-garamond-regular">
             <label htmlFor="name">Name</label>
             <input
               type="text"
@@ -164,7 +177,7 @@ const ProfilePage = () => {
               readOnly
             />
           </div>
-          <div className="form-group mt-2">
+          <div className="form-group mt-2 lead cormorant-garamond-regular">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -174,7 +187,7 @@ const ProfilePage = () => {
               readOnly
             />
           </div>
-          <div className="form-group mt-2">
+          <div className="form-group mt-2 lead cormorant-garamond-regular">
             <label htmlFor="phoneNumber">Phone Number</label>
             <input
               type="text"
@@ -185,7 +198,7 @@ const ProfilePage = () => {
               disabled={profile.phoneNumberUpdated}
             />
           </div>
-          <div className="form-group mt-2">
+          <div className="form-group mt-2 lead cormorant-garamond-regular">
             <label htmlFor="deliveryArea">Delivery Area</label>
             <select
               className="form-control"
@@ -201,7 +214,7 @@ const ProfilePage = () => {
               ))}
             </select>
           </div>
-          <div className="form-group mt-2">
+          <div className="form-group mt-2 lead cormorant-garamond-regular">
             <label htmlFor="homeAddress">Home Address</label>
             <input
               type="text"
@@ -211,7 +224,10 @@ const ProfilePage = () => {
               onChange={(e) => setHomeAddress(e.target.value)}
             />
           </div>
-          <button type="submit" className="btn btn-primary mt-3">
+          <button
+            type="submit"
+            className="btn btn-primary mt-3 lead cormorant-garamond-regular"
+          >
             Update Profile
           </button>
         </form>

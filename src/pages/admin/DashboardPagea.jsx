@@ -22,8 +22,8 @@ const DashboardPagea = () => {
       />
       <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
         <div>
-          <h2>Dashboard</h2>
-          <p>
+          <h2 className="display-4 cormorant-garamond-bold">Dashboard</h2>
+          <p className="lead cormorant-garamond-regular">
             This is your Admin dashboard where you can see an overview of your
             activities.
           </p>

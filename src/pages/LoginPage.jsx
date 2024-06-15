@@ -47,10 +47,15 @@ const LoginPage = () => {
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <div className="card shadow-lg p-4">
-        <h2 className="card-title text-center mb-4">Login</h2>
+        <h2 className="card-title text-center mb-4 display-4 cormorant-garamond-semibold ">
+          Login
+        </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
+          <div className="mb-3 cormorant-garamond-regular lead">
+            <label
+              htmlFor="email"
+              className="form-label cormorant-garamond-regular lead"
+            >
               Email
             </label>
             <input
@@ -63,8 +68,11 @@ const LoginPage = () => {
               required
             />
           </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
+          <div className="mb-3 cormorant-garamond-regular lead">
+            <label
+              htmlFor="password"
+              className="form-label cormorant-garamond-regular lead"
+            >
               Password
             </label>
             <input
@@ -78,12 +86,20 @@ const LoginPage = () => {
           </div>
           {error && <div className="alert alert-danger">{error}</div>}{" "}
           {/* Display error */}
-          <button type="submit" className="btn btn-primary w-100">
+          <button
+            type="submit"
+            className="btn btn-primary w-100 cormorant-garamond-regular lead"
+          >
             Login
           </button>
         </form>
-        <p className="text-center mt-3">No account yet?</p>
-        <Link to="/register" className="btn btn-outline-primary w-100">
+        <p className="text-center mt-3 cormorant-garamond-regular lead">
+          No account yet?
+        </p>
+        <Link
+          to="/register"
+          className="btn btn-outline-primary w-100 cormorant-garamond-regular lead"
+        >
           Register
         </Link>
       </div>
