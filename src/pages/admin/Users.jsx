@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
+import "./Sidebar/Sidebar.css";
 import axios from "axios";
 
 const Usersa = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [receipts, setReceipts] = useState([]);
   const [deliveryRegion, setDeliveryRegion] = useState("");
   const navigate = useNavigate();
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -63,113 +69,86 @@ const Usersa = () => {
   };
 
   return (
-    <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/home">
-          ReceiptReconcile
-        </a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/dashboard">
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/home">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/profile">
-                Profile
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/upload-receipts">
-                Upload Receipts
-              </Link>
-            </li>
-          </ul>
-          <button
-            className="btn btn-outline-danger my-2 my-sm-0"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-      </nav>
-      <div>
-        <h2>Users</h2>
-        <p>This is a list of all Users</p>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(user._id)}
-                  >
-                    Delete
-                  </button>
-                  {"  "}
-                  <button
-                    className="btn btn-warning btn-sm ml-2"
-                    onClick={() => handleBlock(user._id)}
-                  >
-                    Block
-                  </button>
-                  {"  "}
-                  <button
-                    className="btn btn-primary btn-sm ml-2"
-                    onClick={() =>
-                      handleUserSelect(user._id, user.deliveryArea)
-                    }
-                  >
-                    View Receipts
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {selectedUserId && (
+    <div className="dashboard-container">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        handleLogout={handleLogout}
+      />
+      <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
         <div>
-          <h3>Uploaded Receipts</h3>
-          <p>
-            <strong>Delivery Region:</strong> {deliveryRegion}
-          </p>
-          {receipts.map((receipt) => (
-            <div key={receipt._id} className="mb-2">
-              <a
-                href={`http://localhost:5173/${receipt.fileUrl}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Receipt
-              </a>{" "}
-              <span className="ml-2">
-                Order From: {receipt.storeName}. Uploaded on:{" "}
-                {new Date(receipt.uploadDate).toLocaleString()} by{" "}
-                {receipt.uploader?.email || "Unknown"}
-              </span>
-            </div>
-          ))}
+          <h2>Users</h2>
+          <p>This is a list of all Users</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td> {user.name}</td>
+                  <td> {user.email}</td>
+                  <td>{user.role}</td>
+                  <td>
+                    <button
+                      className="btn btn-danger btn-sm mt-1"
+                      onClick={() => handleDelete(user._id)}
+                    >
+                      Delete
+                    </button>
+                    {"  "}
+
+                    <button
+                      className="btn btn-warning btn-sm ml-2 mt-1"
+                      onClick={() => handleBlock(user._id)}
+                    >
+                      Block
+                    </button>
+                    {"  "}
+                    <button
+                      className="btn btn-primary btn-sm ml-2 mt-1"
+                      onClick={() =>
+                        handleUserSelect(user._id, user.deliveryArea)
+                      }
+                    >
+                      View Receipts
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+        {selectedUserId && (
+          <div>
+            <h3>Uploaded Receipts</h3>
+            <p>
+              <strong>Delivery Region:</strong> {deliveryRegion}
+            </p>
+            {receipts.map((receipt) => (
+              <div key={receipt._id} className="mb-2">
+                <a
+                  href={`http://localhost:5173/${receipt.fileUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Receipt
+                </a>{" "}
+                <span className="ml-2">
+                  Order From: {receipt.storeName}. Uploaded on:{" "}
+                  {new Date(receipt.uploadDate).toLocaleString()} by{" "}
+                  {receipt.uploader?.email || "Unknown"}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

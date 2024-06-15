@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
+import "./Sidebar/Sidebar.css";
 
 const UploadReceiptsPagea = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const navigate = useNavigate();
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -22,60 +28,32 @@ const UploadReceiptsPagea = () => {
   };
 
   return (
-    <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/home">
-          ReceiptReconcile
-        </a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/dashboard">
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/home">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/profile">
-                Profile
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/usersa">
-                Admin
-              </Link>
-            </li>
-          </ul>
-          <button
-            className="btn btn-outline-danger my-2 my-sm-0"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-      </nav>
-      <div>
-        <h2>Upload Receipts</h2>
-        <form onSubmit={handleSubmit}>
-          <div></div>
-          <div className="form-group mt-3">
-            <label htmlFor="receiptUpload">Upload Receipt, Admin </label>
+    <div className="dashboard-container">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        handleLogout={handleLogout}
+      />
+      <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
+        <div>
+          <h2>Upload Receipts</h2>
+          <form onSubmit={handleSubmit}>
             <div></div>
-            <input
-              type="file"
-              className="form-control-file mt-3"
-              id="receiptUpload"
-              onChange={handleFileChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary mt-3">
-            Submit
-          </button>
-        </form>
+            <div className="form-group mt-3">
+              <label htmlFor="receiptUpload">Upload Receipt, Admin </label>
+              <div></div>
+              <input
+                type="file"
+                className="form-control-file mt-3"
+                id="receiptUpload"
+                onChange={handleFileChange}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary mt-3">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

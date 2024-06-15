@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
+import "./Sidebar/Sidebar.css";
 import axios from "axios";
 
 const UploadReceiptsPage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [error, setError] = useState("");
@@ -11,6 +14,9 @@ const UploadReceiptsPage = () => {
   const [receipts, setReceipts] = useState([]);
 
   const navigate = useNavigate();
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const fetchReceipts = async () => {
@@ -104,38 +110,13 @@ const UploadReceiptsPage = () => {
   };
 
   return (
-    <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a className="navbar-brand" href="/home">
-          ReceiptReconcile
-        </a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/home">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/profile">
-                Profile
-              </Link>
-            </li>
-          </ul>
-          <button
-            className="btn btn-outline-danger my-2 my-sm-0"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-      </nav>
-      <div>
+    <div className="dashboard-container">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        handleLogout={handleLogout}
+      />
+      <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
         <h2 className="mb-3">Upload Receipts</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-4">

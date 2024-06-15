@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
+import "./Sidebar/Sidebar.css";
 import axios from "axios";
 
 const HomePagea = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [deliveryArea, setDeliveryArea] = useState("");
   const [storeName, setStoreName] = useState("");
   const [sellerContact, setSellerContact] = useState("");
@@ -12,6 +15,9 @@ const HomePagea = () => {
   const [error, setError] = useState("");
   const [acceptedNotifications, setAcceptedNotifications] = useState([]);
   const navigate = useNavigate();
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const fetchAcceptedNotifications = async () => {
@@ -79,153 +85,125 @@ const HomePagea = () => {
   };
 
   return (
-    <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/home">
-          ReceiptReconcile
-        </a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/dashboard">
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/profile">
-                Profile
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/upload-receipts">
-                Upload Receipts
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/usersa">
-                Admin
-              </Link>
-            </li>
-          </ul>
-          <button
-            className="btn btn-outline-danger my-2 my-sm-0"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+    <div className="dashboard-container">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        handleLogout={handleLogout}
+      />
+      <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
+        <div className="jumbotron">
+          <h1 className="display-4">Welcome to ReceiptReconcile!</h1>
+          <p className="lead">Manage and upload your receipts effortlessly.</p>
+          <hr className="my-4" />
+          <p>
+            Navigate through your Admin profile, dashboard, and receipt uploads
+            using the navigation bar above.
+          </p>
         </div>
-      </nav>
 
-      <div className="jumbotron mt-4">
-        <h1 className="display-4">Welcome to ReceiptReconcile!</h1>
-        <p className="lead">Manage and upload your receipts effortlessly.</p>
-        <hr className="my-4" />
-        <p>
-          Navigate through your Admin profile, dashboard, and receipt uploads
-          using the navigation bar above.
-        </p>
-      </div>
-
-      <div className="mt-4">
-        <h2>Create a Notification</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group mt-3">
-            <label htmlFor="deliveryArea">Delivery Area</label>
-            <select
-              className="form-control mt-2"
-              id="deliveryArea"
-              value={deliveryArea}
-              onChange={(e) => setDeliveryArea(e.target.value)}
-              required
-            >
-              <option value="">Select Delivery Area</option>
-              <option value="Oshodi">Oshodi</option>
-              <option value="Ifako-Ijaye">Ifako-Ijaye</option>
-              <option value="Mushin">Mushin</option>
-              <option value="Lekki">Lekki</option>
-              <option value="Ikeja">Ikeja</option>
-              <option value="Alimosho">Alimosho</option>
-              <option value="Kosofe">Kosofe</option>
-              <option value="Ajah">Ajah</option>
-            </select>
-          </div>
-          <div className="form-group mt-3">
-            <label htmlFor="storeName">Store Name</label>
-            <input
-              type="text"
-              className="form-control mt-2"
-              id="storeName"
-              value={storeName}
-              onChange={(e) => setStoreName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label htmlFor="sellerContact">Seller Contact</label>
-            <input
-              type="text"
-              className="form-control mt-2"
-              id="sellerContact"
-              value={sellerContact}
-              onChange={(e) => setSellerContact(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label htmlFor="item">Item to be Picked Up</label>
-            <input
-              type="text"
-              className="form-control mt-2"
-              id="item"
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label htmlFor="quantity">Quantity</label>
-            <input
-              type="number"
-              className="form-control mt-2"
-              id="quantity"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              required
-            />
-          </div>
-          {error && <div className="alert alert-danger mt-3">{error}</div>}
-          {success && <div className="alert alert-success mt-3">{success}</div>}
-          <button type="submit" className="btn btn-primary mt-4">
-            Create Notification
-          </button>
-        </form>
-      </div>
-
-      <div className="mt-4">
-        <h2>Notification Details</h2>
-        <div className="card mt-3">
-          <div className="card-header">Accepted Notifications</div>
-          <ul className="list-group list-group-flush">
-            {acceptedNotifications.length === 0 ? (
-              <li className="list-group-item">No accepted notifications.</li>
-            ) : (
-              acceptedNotifications.map((notification) => (
-                <li className="list-group-item" key={notification._id}>
-                  <strong>Delivery Person:</strong>{" "}
-                  {notification.acceptedBy
-                    ? notification.acceptedBy.email
-                    : "N/A"}
-                  ,{" "}
-                  {notification.acceptedBy
-                    ? notification.acceptedBy.phoneNumber
-                    : "N/A"}
-                  <br />
-                  <strong>Delivery Status:</strong>{" "}
-                  {notification.deliveredAt ? "Delivered" : "Pending"}
-                </li>
-              ))
+        <div className="mt-4">
+          <h2>Create a Notification</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group mt-3">
+              <label htmlFor="deliveryArea">Delivery Area</label>
+              <select
+                className="form-control mt-2"
+                id="deliveryArea"
+                value={deliveryArea}
+                onChange={(e) => setDeliveryArea(e.target.value)}
+                required
+              >
+                <option value="">Select Delivery Area</option>
+                <option value="Oshodi">Oshodi</option>
+                <option value="Ifako-Ijaye">Ifako-Ijaye</option>
+                <option value="Mushin">Mushin</option>
+                <option value="Lekki">Lekki</option>
+                <option value="Ikeja">Ikeja</option>
+                <option value="Alimosho">Alimosho</option>
+                <option value="Kosofe">Kosofe</option>
+                <option value="Ajah">Ajah</option>
+              </select>
+            </div>
+            <div className="form-group mt-3">
+              <label htmlFor="storeName">Store Name</label>
+              <input
+                type="text"
+                className="form-control mt-2"
+                id="storeName"
+                value={storeName}
+                onChange={(e) => setStoreName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label htmlFor="sellerContact">Seller Contact</label>
+              <input
+                type="text"
+                className="form-control mt-2"
+                id="sellerContact"
+                value={sellerContact}
+                onChange={(e) => setSellerContact(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label htmlFor="item">Item to be Picked Up</label>
+              <input
+                type="text"
+                className="form-control mt-2"
+                id="item"
+                value={item}
+                onChange={(e) => setItem(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label htmlFor="quantity">Quantity</label>
+              <input
+                type="number"
+                className="form-control mt-2"
+                id="quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                required
+              />
+            </div>
+            {error && <div className="alert alert-danger mt-3">{error}</div>}
+            {success && (
+              <div className="alert alert-success mt-3">{success}</div>
             )}
-          </ul>
+            <button type="submit" className="btn btn-primary mt-4">
+              Create Notification
+            </button>
+          </form>
+        </div>
+
+        <div className="mt-4">
+          <h2>Notification Details</h2>
+          <div className="card mt-3">
+            <div className="card-header">Accepted Notifications</div>
+            <ul className="list-group list-group-flush">
+              {acceptedNotifications.length === 0 ? (
+                <li className="list-group-item">No accepted notifications.</li>
+              ) : (
+                acceptedNotifications.map((notification) => (
+                  <li className="list-group-item" key={notification._id}>
+                    <strong>Delivery Person:</strong>{" "}
+                    {notification.acceptedBy
+                      ? notification.acceptedBy.email
+                      : "N/A"}{" "}
+                    {notification.acceptedBy
+                      ? notification.acceptedBy.phoneNumber
+                      : "N/A"}
+                    <br />
+                    <strong>Delivery Status:</strong>{" "}
+                    {notification.deliveredAt ? "Delivered" : "Pending"}
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

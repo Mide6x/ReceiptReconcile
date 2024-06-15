@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
 import axios from "axios";
 
 const ProfilePage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [profile, setProfile] = useState({});
   const [profilePicture, setProfilePicture] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -11,6 +13,10 @@ const ProfilePage = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const deliveryAreas = [
     "Oshodi",
@@ -95,7 +101,7 @@ const ProfilePage = () => {
       );
       setSuccess("Profile picture updated successfully!");
       setError("");
-      setProfile(response.data);
+      setProfile(response.data); // Assuming response.data contains updated profile information including profilePicture
     } catch (err) {
       console.error("Error updating profile picture:", err.response || err);
       setError("An error occurred while updating the profile picture.");
@@ -104,38 +110,13 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="container">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a className="navbar-brand" href="/home">
-          ReceiptReconcile
-        </a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/home">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/dashboard">
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/upload-receipts">
-                Upload Receipts
-              </Link>
-            </li>
-          </ul>
-          <button
-            className="btn btn-outline-danger my-2 my-sm-0"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
-      </nav>
-      <div>
+    <div className="dashboard-container">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        handleLogout={handleLogout}
+      />
+      <div className={`main-content ${isSidebarOpen ? "" : "collapsed"}`}>
         <h2>Profile</h2>
         <p>
           This is your profile page where you can manage your personal
@@ -150,10 +131,10 @@ const ProfilePage = () => {
             {profile.profilePicture && (
               <div>
                 <img
-                  src={`http://localhost:3001/${profile.profilePicture}`}
-                  alt="Profile"
+                  src={`http://localhost:5173/uploads/${profile.profilePicture}`}
+                  alt="Profile Picture"
                   className="img-thumbnail"
-                  style={{ maxWidth: "150px", height: "auto" }}
+                  style={{ maxWidth: "150px", height: "150px" }}
                 />
               </div>
             )}
