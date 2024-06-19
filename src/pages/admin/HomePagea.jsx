@@ -15,41 +15,43 @@ const HomePagea = () => {
   const [error, setError] = useState("");
   const [acceptedNotifications, setAcceptedNotifications] = useState([]);
   const navigate = useNavigate();
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  useEffect(() => {
-    const fetchAcceptedNotifications = async () => {
-      try {
-        const token = localStorage.getItem("token");
+  const fetchAcceptedNotifications = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-        if (!token) {
-          console.error("No token found. Redirecting to login.");
-          navigate("/login");
-          return;
-        }
-
-        const response = await axios.get(
-          "http://localhost:3001/notifications/accepted",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setAcceptedNotifications(response.data);
-      } catch (err) {
-        console.error(
-          "Error fetching accepted notifications:",
-          err.response || err
-        );
+      if (!token) {
+        console.error("No token found. Redirecting to login.");
+        navigate("/login");
+        return;
       }
-    };
 
+      const response = await axios.get(
+        "http://localhost:3001/notifications/accepted",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setAcceptedNotifications(response.data.notifications);
+    } catch (err) {
+      console.error(
+        "Error fetching accepted notifications:",
+        err.response || err
+      );
+      setError("Failed to fetch notifications.");
+    }
+  };
+
+  useEffect(() => {
     fetchAcceptedNotifications();
-  }, [navigate]);
+  }, [navigate]); // Refresh notifications list on navigate change
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -77,6 +79,8 @@ const HomePagea = () => {
       setSellerContact("");
       setItem("");
       setQuantity("");
+      // Refresh notifications list after successful creation
+      fetchAcceptedNotifications();
     } catch (err) {
       console.error("Error creating notification:", err.response || err);
       setError("An error occurred while creating the notification.");
@@ -105,7 +109,6 @@ const HomePagea = () => {
             using the sidebar.
           </p>
         </div>
-
         <div className="mt-4">
           <h2 className="display-6 cormorant-garamond-medium">
             Create a Notification
@@ -193,13 +196,14 @@ const HomePagea = () => {
             </button>
           </form>
         </div>
+
         <hr className="my-4" />
         <div className="mt-4">
           <h2 className="display-6 cormorant-garamond-medium">
             Notification Details
           </h2>
           <div className="card mt-3 lead cormorant-garamond-regular">
-            <div className="card-header ">Accepted Notifications</div>
+            <div className="card-header">Accepted Notifications</div>
             <ul className="list-group list-group-flush">
               {acceptedNotifications.length === 0 ? (
                 <li className="list-group-item">No accepted notifications.</li>

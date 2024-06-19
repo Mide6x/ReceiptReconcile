@@ -8,7 +8,6 @@ const HomePage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [notifications, setNotifications] = useState([]);
   const [pendingDeliveries, setPendingDeliveries] = useState([]);
-  const [acceptedNotification, setAcceptedNotification] = useState(null);
   const navigate = useNavigate();
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -35,10 +34,10 @@ const HomePage = () => {
         );
 
         const acceptedNotifications = response.data.filter(
-          (notification) => notification.acceptedAt && !notification.deliveredAt
+          (notification) => notification.accepted && !notification.deliveredAt
         );
         const pendingNotifications = response.data.filter(
-          (notification) => !notification.acceptedAt
+          (notification) => !notification.accepted
         );
 
         setNotifications(pendingNotifications);
@@ -79,12 +78,6 @@ const HomePage = () => {
       );
       setNotifications(updatedNotifications);
       setPendingDeliveries([...pendingDeliveries, response.data]);
-      setAcceptedNotification(response.data);
-
-      localStorage.setItem(
-        "acceptedNotification",
-        JSON.stringify(response.data)
-      );
     } catch (err) {
       console.error("Error accepting notification:", err.response || err);
     }
@@ -107,11 +100,6 @@ const HomePage = () => {
         (d) => d._id !== notificationId
       );
       setPendingDeliveries(updatedPendingDeliveries);
-
-      const updatedNotifications = notifications.filter(
-        (n) => n._id !== notificationId
-      );
-      setNotifications(updatedNotifications);
 
       navigateToUploadReceipts();
     } catch (err) {
@@ -163,7 +151,6 @@ const HomePage = () => {
                   <button
                     className="btn btn-primary mt-2 lead cormorant-garamond-regular"
                     onClick={() => handleAccept(notification._id)}
-                    disabled={!!acceptedNotification}
                   >
                     Accept Delivery
                   </button>
