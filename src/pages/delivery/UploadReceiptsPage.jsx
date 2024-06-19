@@ -165,8 +165,16 @@ const UploadReceiptsPage = () => {
               />
             </div>
           )}
-          {error && <div className="alert alert-danger">{error}</div>}
-          {success && <div className="alert alert-success">{success}</div>}
+          {error && (
+            <div className="alert alert-danger lead cormorant-garamond-regular">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="alert alert-success lead cormorant-garamond-regular">
+              {success}
+            </div>
+          )}
           <button
             type="submit"
             className="btn btn-primary lead cormorant-garamond-regular"
