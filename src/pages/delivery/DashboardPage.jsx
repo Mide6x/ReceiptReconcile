@@ -67,7 +67,7 @@ const DashboardPage = () => {
         );
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
-        navigate("/login"); // Redirect to login on error
+        navigate("/login");
       }
     };
 
